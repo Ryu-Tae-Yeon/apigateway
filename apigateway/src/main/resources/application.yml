@@ -1,1 +1,62 @@
 
+# ??? ????
+spring:
+  application:
+    name: mvc-apigateway-store
+
+
+
+# ????
+server:
+
+  # ??? ??
+  port: 80
+
+  # ?? Access log
+  tomcat:
+
+    basedir: .                    #spring boot? ???? ????? ?? ????? ??
+
+    accesslog:
+      enabled: true               #????? ????
+      directory: log/accesslog    #?? ??? base???? ?? ./logs ????? ?? ???? ??
+      prefix: access_log
+      file-date-format: .yyyy-MM-dd
+      pattern: '%{yyyy-MM-dd HH:mm:ss.SSS}t %a %s %b %D %r "%{User-Agent}i" "%{Referer}i" '
+
+
+
+
+
+# AP ????
+logging:
+
+  charset:
+    console: UTF-8
+    file: UTF-8
+
+  file:
+    name: ./log/${spring.application.name}.log
+    max-history: 30       # ???? ??? ?? ????
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) --- [%-10.10thread] %cyan([%logger{0}:%line] %M)  : %marker %msg%n"
+    file:    "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level --- [%-10.10thread] [%logger{0}:%line] %M : %marker %msg%n"
+
+  level:
+    root: INFO
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    log4jdbc.log4j2: INFO    # ???? ERROR?, SQL ??? ??? ? INFO
+
+
+
+
+
+# log4jdbc SQL ???? ??
+log4jdbc:
+  spylogdelegator:
+    name: net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+  drivers: oracle.jdbc.OracleDriver
+  dump:
+    sql:
+      maxlinelength: 0
